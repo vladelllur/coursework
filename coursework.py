@@ -56,13 +56,17 @@ def show_message_delete():
 """
 маленькие списки
 """
+TypeofTask = ["", "Домашнее", "Лаб.работа"]
 Students = ['','Тришин Владислав', 'Осмонкулов Жылдызбек', 'кот Тимофей', 'Какой-то левый чел']
 Courses = ["", "ЯПВУ", "Информатика"]
-TypeofLesson = ['', 'лекция', 'практика', 'лабораторное']
+TypeofLesson = ['', 'Лекция', 'Практика', 'Лабораторное']
 
 message1 = StringVar(root)
 message2 = StringVar(root)
 message3 = StringVar(root)
+#page4
+message4 = StringVar(root)
+message5 = StringVar(root)
 
 variable1 = StringVar(root)
 variable1.set(Courses[0]) # default value
@@ -76,6 +80,10 @@ variable5 = StringVar(root)
 variable5.set(Students[0]) # default value
 variable6 = StringVar(root)
 variable6.set(TypeofLesson[0]) # default value
+variable7 = StringVar(root)
+variable7.set(Students[0]) # default value
+variable8 = StringVar(root)
+variable8.set(TypeofLesson[0]) # default value
 
 menu1 = OptionMenu(page2, variable1, *Courses)
 menu1.pack()
@@ -95,6 +103,12 @@ menu5.place(x=240, y=117)
 menu6 = OptionMenu(page3, variable6, *TypeofLesson)
 menu6.pack()
 menu6.place(x=240, y=77)
+menu7 = OptionMenu(page4, variable7, *Students)
+menu7.pack()
+menu7.place(x=240, y=117)
+menu8 = OptionMenu(page4, variable8, *TypeofTask)
+menu8.pack()
+menu8.place(x=240, y=77)
 
 message_entry = Entry(page3, textvariable=message1)
 message_entry.place(x=302, y=175, anchor="c")
@@ -102,6 +116,11 @@ message_entry2 = Entry(page3, textvariable=message2)
 message_entry2.place(x=302, y=215, anchor="c")
 message_entry3 = Entry(page1, textvariable=message3)
 message_entry3.place(x=302, y=55, anchor="c")
+#page4
+message_entry4 = Entry(page4, textvariable=message2)
+message_entry4.place(x=302, y=215, anchor="c")
+message_entry5 = Entry(page4, textvariable=message3)
+message_entry5.place(x=302, y=175, anchor="c")
 """
 метки с текстом и не только
 """
@@ -163,6 +182,22 @@ label11.place(x=60, y=160)
 label12 = Label(page3, text="Комментарий", font="Arial 12")
 label12.pack()
 label12.place(x=60, y=200)
+
+label13 = Label(page4, text="Тип задания", font="Arial 12")
+label13.pack()
+label13.place(x=60, y=80)
+
+label14 = Label(page4, text="Выберите студента", font="Arial 12")
+label14.pack()
+label14.place(x=60, y=120)
+
+label15 = Label(page4, text="Оценка", font="Arial 12")
+label15.pack()
+label15.place(x=60, y=160)
+
+label16 = Label(page4, text="Комментарий", font="Arial 12")
+label16.pack()
+label16.place(x=60, y=200)
 
 canvas1 = Canvas(page5, width=350, height=50, bg='white')
 canvas1.pack()
