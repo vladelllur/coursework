@@ -26,21 +26,66 @@ page5 = ttk.Frame(nb)
 """
 функции
 """
+def check_page_3():
+    s = message_entry.get()
+    def showerror():
+        mb.showerror(
+                "Ошибка", 
+                "Введите корректные данные в поле \"Дата\"")
+    
+    if len(s) == 10 and s[2] == "." and s[5] == ".":
+        day = s[0:2]
+        month = s[3:5]
+        year = s[6:10]
+        if day.isalpha() or month.isalpha() or year.isalpha():
+            showerror()
+        day = int(day)
+        month = int(month)
+        year = int(year)
+        if day > 31 or day < 1 or month > 12 or month < 1 or year < 1000:
+            showerror()
+        message_entry.delete(0, END)
+        print("Вы ввели дату "+s)
+    else:
+        showerror()
+
 def check_page_4():
+    def showerror():
+        mb.showerror(
+                "Ошибка", 
+                "Введите корректные данные в поле \"Оценка\"")
     s_4 = message_entry4.get()
     if not s_4.isdigit():
-        mb.showerror(
-            "Ошибка", 
-            "Введите корректные данные в поле \"Оценка\"")
+        showerror()
     else:
         s_4 = int(s_4)
         if s_4 < 0 or s_4 > 5:
-            mb.showerror(
-                "Ошибка", 
-                "Введите корректные данные в поле \"Оценка\"")
+            showerror()
         else:
             message_entry4.delete(0, END)
             print("Вы ввели "+str(s_4))
+            
+def check_page_2():            
+    s_6 = message_entry6.get()
+    if s_6.isdigit():
+        mb.showerror(
+            "Ошибка", 
+            "Введите корректные данные в поле \"ФИО студента\"")
+    else:
+        message_entry6.delete(0, END)
+        print("Вы ввели " + s_6)
+        
+def check_page_1():            
+    s_3 = message_entry3.get()
+    if s_3.isdigit():
+        mb.showerror(
+            "Ошибка", 
+            "Введите корректные данные в поле \"Название курса\"")
+    else:
+        message_entry3.delete(0, END)
+        print("Вы создали курс " + s_3)
+        
+
     
 def select():
     print ("Результаты успеваемости по " + variable4.get() + ":")
@@ -52,13 +97,11 @@ def select_item(event):
     label = Label(page5, text=random_values, font="Arial 12", bg = 'white')
     label.pack()
     label.place(x=65, y=220)
-
-def new_course():
-    print("Вы нажали создать курс")
     
 """
 маленькие списки
 """
+Subgroups = ["", "а", "б", "в"]
 TypeofTask = ["", "Домашнее", "Лаб.работа"]
 Students = ['','Тришин Владислав', 'Осмонкулов Жылдызбек', 'кот Тимофей', 'Какой-то левый чел']
 Courses = ["", "ЯПВУ", "Информатика"]
@@ -70,6 +113,7 @@ message3 = StringVar(root)
 #page4
 message4 = StringVar(root)
 message5 = StringVar(root)
+message6 = StringVar(root)
 
 variable1 = StringVar(root)
 variable1.set(Courses[0]) # default value
@@ -87,6 +131,8 @@ variable7 = StringVar(root)
 variable7.set(Students[0]) # default value
 variable8 = StringVar(root)
 variable8.set(TypeofLesson[0]) # default value
+variable9 = StringVar(root)
+variable9.set(Subgroups[0]) # default value
 
 menu1 = OptionMenu(page2, variable1, *Courses)
 menu1.pack()
@@ -112,6 +158,9 @@ menu7.place(x=240, y=117)
 menu8 = OptionMenu(page4, variable8, *TypeofTask)
 menu8.pack()
 menu8.place(x=240, y=77)
+menu9 = OptionMenu(page2, variable9, *Subgroups)
+menu9.pack()
+menu9.place(x=240, y=117)
 
 message_entry = Entry(page3, textvariable=message1)
 message_entry.place(x=302, y=175, anchor="c")
@@ -124,6 +173,9 @@ message_entry4 = Entry(page4, textvariable=message4)
 message_entry4.place(x=302, y=175, anchor="c")
 message_entry5 = Entry(page4, textvariable=message5)
 message_entry5.place(x=302, y=215, anchor="c")
+#page2
+message_entry6 = Entry(page2, textvariable=message6)
+message_entry6.place(x=302, y=92, anchor="c")
 """
 метки с текстом и не только
 """
@@ -206,9 +258,17 @@ label17 = Label(page4, text="(0-5)", font="Arial 12", fg = '#32CD32')
 label17.pack()
 label17.place(x=120, y=160)
 
-label18 = Label(page3, text="(XX.XX.XXXX)", font="Arial 12", fg = '#4B0082')
+label18 = Label(page3, text="(дд.мм.гггг)", font="Arial 12", fg = '#4B0082')
 label18.pack()
 label18.place(x=112, y=162)
+
+label19 = Label(page2, text="ФИО студента", font="Arial 12")
+label19.pack()
+label19.place(x=60, y=80)
+
+label20 = Label(page2, text="Подгруппа", font="Arial 12")
+label20.pack()
+label20.place(x=60, y=120)
 
 canvas1 = Canvas(page5, width=350, height=50, bg='white')
 canvas1.pack()
@@ -238,13 +298,13 @@ nb.add(page5, text='Результаты  ')
 """
 кнопки
 """
-button1 = Button(page1, text="Создать", command=new_course)
+button1 = Button(page1, text="Создать", command=check_page_1)
 button1.pack()
 button1.place(x=400, y=320)
-button2 = Button(page2, text="Сохранить", command=check_page_4)
+button2 = Button(page2, text="Сохранить", command=check_page_2)
 button2.pack()
 button2.place(x=400, y=320)
-button3 = Button(page3, text="Сохранить", command=check_page_4)
+button3 = Button(page3, text="Сохранить", command=check_page_3)
 button3.pack()
 button3.place(x=400, y=320)
 button4 = Button(page4, text="Сохранить", command=check_page_4)
