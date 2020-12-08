@@ -2,6 +2,7 @@ from tkinter import *
 import tkinter.ttk as ttk
 from tkinter.scrolledtext import ScrolledText
 from PIL import ImageTk, Image
+from tkinter import messagebox as mb
 import random
 """
 настройки главного окна
@@ -25,12 +26,21 @@ page5 = ttk.Frame(nb)
 """
 функции
 """
-#def show_message():
-    #print("Вы ввели: " + message1.get() + message2.get())
-
-def save():
-    print ("Вы выбрали:" + variable1.get() + variable2.get() + variable3.get())
-    #def show_message()
+def check_page_4():
+    s_4 = message_entry4.get()
+    if not s_4.isdigit():
+        mb.showerror(
+            "Ошибка", 
+            "Введите корректные данные в поле \"Оценка\"")
+    else:
+        s_4 = int(s_4)
+        if s_4 < 0 or s_4 > 5:
+            mb.showerror(
+                "Ошибка", 
+                "Введите корректные данные в поле \"Оценка\"")
+        else:
+            message_entry4.delete(0, END)
+            print("Вы ввели "+str(s_4))
     
 def select():
     print ("Результаты успеваемости по " + variable4.get() + ":")
@@ -45,14 +55,7 @@ def select_item(event):
 
 def new_course():
     print("Вы нажали создать курс")
-"""
-пока не работает, но обязательно заработает
-"""
-def show_message_delete():
-    label_message = Label(root, text = "Вы ввели: " + message_entry.get(), justify=CENTER, font="Consolas 14")
-    label_message.pack()
-    label_message.place(x=60, y=40)
-    root.after(2500, lambda: label_message.pack_forget())
+    
 """
 маленькие списки
 """
@@ -117,10 +120,10 @@ message_entry2.place(x=302, y=215, anchor="c")
 message_entry3 = Entry(page1, textvariable=message3)
 message_entry3.place(x=302, y=55, anchor="c")
 #page4
-message_entry4 = Entry(page4, textvariable=message2)
-message_entry4.place(x=302, y=215, anchor="c")
-message_entry5 = Entry(page4, textvariable=message3)
-message_entry5.place(x=302, y=175, anchor="c")
+message_entry4 = Entry(page4, textvariable=message4)
+message_entry4.place(x=302, y=175, anchor="c")
+message_entry5 = Entry(page4, textvariable=message5)
+message_entry5.place(x=302, y=215, anchor="c")
 """
 метки с текстом и не только
 """
@@ -199,11 +202,20 @@ label16 = Label(page4, text="Комментарий", font="Arial 12")
 label16.pack()
 label16.place(x=60, y=200)
 
+label17 = Label(page4, text="(0-5)", font="Arial 12", fg = '#32CD32')
+label17.pack()
+label17.place(x=120, y=160)
+
+label18 = Label(page3, text="(XX.XX.XXXX)", font="Arial 12", fg = '#4B0082')
+label18.pack()
+label18.place(x=112, y=162)
+
 canvas1 = Canvas(page5, width=350, height=50, bg='white')
 canvas1.pack()
 canvas1.place(x=60, y=215)
-
-
+"""
+не получается вставить никакое изображение
+"""
 #path = 'D:/gif.gif'
 #img = ImageTk.PhotoImage(Image.open("D:\\gif.gif"))
 #panel = Label(root, image = img)
@@ -229,13 +241,13 @@ nb.add(page5, text='Результаты  ')
 button1 = Button(page1, text="Создать", command=new_course)
 button1.pack()
 button1.place(x=400, y=320)
-button2 = Button(page2, text="Сохранить", command=save and show_message_delete)
+button2 = Button(page2, text="Сохранить", command=check_page_4)
 button2.pack()
 button2.place(x=400, y=320)
-button3 = Button(page3, text="Сохранить", command=save)
+button3 = Button(page3, text="Сохранить", command=check_page_4)
 button3.pack()
 button3.place(x=400, y=320)
-button4 = Button(page4, text="Сохранить", command=save)
+button4 = Button(page4, text="Сохранить", command=check_page_4)
 button4.pack()
 button4.place(x=400, y=320)
 button5 = Button(page5, text="Выбрать", command=select)
