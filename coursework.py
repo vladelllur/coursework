@@ -26,6 +26,9 @@ page5 = ttk.Frame(nb)
 """
 функции
 """
+def show():
+    print("Количество подгрупп нового курса - ", variable10.get() + variable11.get() + variable12.get() + variable13.get())
+
 def check_page_3():
     s = message_entry.get()
     def showerror():
@@ -133,6 +136,15 @@ variable8 = StringVar(root)
 variable8.set(TypeofLesson[0]) # default value
 variable9 = StringVar(root)
 variable9.set(Subgroups[0]) # default value
+#page1
+variable10 = IntVar()
+variable10.set(0)
+variable11 = IntVar()
+variable11.set(0)
+variable12 = IntVar()
+variable12.set(0)
+variable13 = IntVar()
+variable13.set(0)
 
 menu1 = OptionMenu(page2, variable1, *Courses)
 menu1.pack()
@@ -176,6 +188,31 @@ message_entry5.place(x=302, y=215, anchor="c")
 #page2
 message_entry6 = Entry(page2, textvariable=message6)
 message_entry6.place(x=302, y=92, anchor="c")
+#page1
+checkbutton1 = Checkbutton(page1, text="а",
+                 variable=variable10,
+                 onvalue=1, offvalue=0,
+                 command=show)
+checkbutton1.pack(anchor=W)
+checkbutton1.place(x=240, y=80)
+checkbutton2 = Checkbutton(page1, text="б",
+                 variable=variable11,
+                 onvalue=1, offvalue=0,
+                 command=show)
+checkbutton2.pack(anchor=W)
+checkbutton2.place(x=240, y=100)
+checkbutton3 = Checkbutton(page1, text="в",
+                 variable=variable12,
+                 onvalue=1, offvalue=0,
+                 command=show)
+checkbutton3.pack(anchor=W)
+checkbutton3.place(x=240, y=120)
+checkbutton4 = Checkbutton(page1, text="г",
+                 variable=variable13,
+                 onvalue=1, offvalue=0,
+                 command=show)
+checkbutton4.pack(anchor=W)
+checkbutton4.place(x=240, y=140)
 """
 метки с текстом и не только
 """
@@ -269,6 +306,10 @@ label19.place(x=60, y=80)
 label20 = Label(page2, text="Подгруппа", font="Arial 12")
 label20.pack()
 label20.place(x=60, y=120)
+
+label19 = Label(page1, text="Количество подгрупп", font="Arial 12")
+label19.pack()
+label19.place(x=60, y=80)
 
 canvas1 = Canvas(page5, width=350, height=50, bg='white')
 canvas1.pack()
