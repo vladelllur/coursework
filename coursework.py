@@ -10,6 +10,7 @@ import random
 root = Tk()
 root['bg'] = 'black'
 root.title('курсовая емае')
+root.iconbitmap('icon.ico')
 root.wm_attributes( '-alpha', 0.9 )
 root.geometry('480x380')
 root.resizable( width = False, height = False )
@@ -80,14 +81,21 @@ def check_page_2():
         
 def check_page_1():            
     s_3 = message_entry3.get()
-    if s_3.isdigit():
+    if s_3.isdigit() or len(s_3) < 1:
         mb.showerror(
             "Ошибка", 
             "Введите корректные данные в поле \"Название курса\"")
     else:
         message_entry3.delete(0, END)
         print("Вы создали курс " + s_3)
-        
+        if variable14.get() == 0:
+            print("без подгрупп")
+        elif variable14.get() == 1:
+            print("есть подгруппы а и б")
+        elif variable14.get() == 2:
+            print("есть подгруппы а, б и в")
+        elif variable14.get() == 3:
+            print("есть подгруппы а, б, в и г")
 
     
 def select():
@@ -137,14 +145,8 @@ variable8.set(TypeofLesson[0]) # default value
 variable9 = StringVar(root)
 variable9.set(Subgroups[0]) # default value
 #page1
-variable10 = IntVar()
-variable10.set(0)
-variable11 = IntVar()
-variable11.set(0)
-variable12 = IntVar()
-variable12.set(0)
-variable13 = IntVar()
-variable13.set(0)
+variable14 = IntVar()
+variable14.set(0)
 
 menu1 = OptionMenu(page2, variable1, *Courses)
 menu1.pack()
@@ -182,44 +184,28 @@ message_entry3 = Entry(page1, textvariable=message3)
 message_entry3.place(x=302, y=55, anchor="c")
 #page4
 message_entry4 = Entry(page4, textvariable=message4)
-message_entry4.place(x=302, y=175, anchor="c")
+message_entry4.place(x=302, y=210, anchor="c")
 message_entry5 = Entry(page4, textvariable=message5)
-message_entry5.place(x=302, y=215, anchor="c")
+message_entry5.place(x=302, y=250, anchor="c")
 #page2
 message_entry6 = Entry(page2, textvariable=message6)
 message_entry6.place(x=302, y=92, anchor="c")
 #page1
-checkbutton1 = Checkbutton(page1, text="а",
-                 variable=variable10,
-                 onvalue=1, offvalue=0,
-                 command=show)
-checkbutton1.pack(anchor=W)
-checkbutton1.place(x=240, y=80)
-checkbutton2 = Checkbutton(page1, text="б",
-                 variable=variable11,
-                 onvalue=1, offvalue=0,
-                 command=show)
-checkbutton2.pack(anchor=W)
-checkbutton2.place(x=240, y=100)
-checkbutton3 = Checkbutton(page1, text="в",
-                 variable=variable12,
-                 onvalue=1, offvalue=0,
-                 command=show)
-checkbutton3.pack(anchor=W)
-checkbutton3.place(x=240, y=120)
-checkbutton4 = Checkbutton(page1, text="г",
-                 variable=variable13,
-                 onvalue=1, offvalue=0,
-                 command=show)
-checkbutton4.pack(anchor=W)
-checkbutton4.place(x=240, y=140)
+grading_system1 = Radiobutton(page1, text="<нет>",
+                  variable=variable14, value=0)
+grading_system2 = Radiobutton(page1, text="2",
+                    variable=variable14, value=1)
+grading_system3 = Radiobutton(page1, text="3",
+                   variable=variable14, value=2)
+grading_system4 = Radiobutton(page1, text="4",
+                   variable=variable14, value=3)
+grading_system1.place(x=240, y=80)
+grading_system2.place(x=240, y=100)
+grading_system3.place(x=240, y=120)
+grading_system4.place(x=240, y=140)
 """
 метки с текстом и не только
 """
-#text = ScrolledText(page2)
-#text.pack(expand=1, fill="both")
-#page1.config(bg="black")
-
 label1 = Label(page1, text="ДОБАВИТЬ НОВЫЙ КУРС", justify=CENTER, font="Consolas 14")
 label1.pack()
 
@@ -285,15 +271,15 @@ label14.place(x=60, y=120)
 
 label15 = Label(page4, text="Оценка", font="Arial 12")
 label15.pack()
-label15.place(x=60, y=160)
+label15.place(x=60, y=200)
 
 label16 = Label(page4, text="Комментарий", font="Arial 12")
 label16.pack()
-label16.place(x=60, y=200)
+label16.place(x=60, y=240)
 
 label17 = Label(page4, text="(0-5)", font="Arial 12", fg = '#32CD32')
 label17.pack()
-label17.place(x=120, y=160)
+label17.place(x=120, y=200)
 
 label18 = Label(page3, text="(дд.мм.гггг)", font="Arial 12", fg = '#4B0082')
 label18.pack()
@@ -307,27 +293,17 @@ label20 = Label(page2, text="Подгруппа", font="Arial 12")
 label20.pack()
 label20.place(x=60, y=120)
 
-label19 = Label(page1, text="Количество подгрупп", font="Arial 12")
-label19.pack()
-label19.place(x=60, y=80)
+label21 = Label(page1, text="Количество подгрупп:", font="Arial 12")
+label21.pack()
+label21.place(x=60, y=80)
+
+label22 = Label(page4, text="Система оценивания", font="Arial 12")
+label22.pack()
+label22.place(x=60, y=160)
 
 canvas1 = Canvas(page5, width=350, height=50, bg='white')
 canvas1.pack()
 canvas1.place(x=60, y=215)
-"""
-не получается вставить никакое изображение
-"""
-#path = 'D:/gif.gif'
-#img = ImageTk.PhotoImage(Image.open("D:\\gif.gif"))
-#panel = Label(root, image = img)
-#panel.pack(side = "bottom", fill = "both", expand = "yes")
-
-#canvas = Canvas(root) 
-#canvas.grid(row = 0, column = 0) 
-#canvas.pack()
-#photo = PhotoImage(file = 'D:/снюс.PNG') 
-#canvas.create_image(0, 0, image=photo)
-
 """
 названия страниц
 """
@@ -355,9 +331,8 @@ button5 = Button(page5, text="Выбрать", command=select)
 button5.pack()
 button5.place(x=360, y=40)
 """
-списки
+списки listbox
 """
-
 listbox = Listbox(page5, width=39, height=5, font=('arial', 13))
 listbox.bind('<<ListboxSelect>>', select_item)
 listbox.place(x=60, y=75)
