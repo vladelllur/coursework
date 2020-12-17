@@ -34,9 +34,7 @@ def check_page_3():
     s = message_entry.get()
     def showerror():
         mb.showerror(
-                "Ошибка", 
-                "Введите корректные данные в поле \"Дата\"")
-    
+                "Ошибка", "Введите корректные данные в поле \"Дата\"")
     if len(s) == 10 and s[2] == "." and s[5] == ".":
         day = s[0:2]
         month = s[3:5]
@@ -55,26 +53,54 @@ def check_page_3():
 
 def check_page_4():
     def showerror():
-        mb.showerror(
-                "Ошибка", 
-                "Введите корректные данные в поле \"Оценка\"")
-    s_4 = message_entry4.get()
-    if not s_4.isdigit():
-        showerror()
-    else:
-        s_4 = int(s_4)
-        if s_4 < 0 or s_4 > 5:
+        mb.showerror("Ошибка", "Введите корректные данные в поле \"Оценка\"")
+    if variable10.get() == 0:
+        s_4 = message_entry4.get()
+        if not s_4.isdigit():
             showerror()
         else:
-            message_entry4.delete(0, END)
-            print("Вы ввели "+str(s_4))
-            
+            s_4 = int(s_4)
+            if s_4 < 0 or s_4 > 5:
+                showerror()
+            else:
+                message_entry4.delete(0, END)
+                print("Вы ввели "+str(s_4))        
+    elif variable10.get() == 1:
+        s_4 = message_entry4.get()
+        if not s_4.isdigit():
+            showerror()
+        else:
+            s_4 = int(s_4)
+            if s_4 < 0 or s_4 > 10:
+                showerror()
+            else:
+                message_entry4.delete(0, END)
+                print("Вы ввели "+str(s_4))
+    elif variable10.get() == 2:
+        s_4 = message_entry4.get()
+        if not s_4.isdigit():
+            showerror()
+        else:
+            s_4 = int(s_4)
+            if s_4 < 0 or s_4 > 100:
+                showerror()
+            else:
+                message_entry4.delete(0, END)
+                print("Вы ввели "+str(s_4)) 
+
+def change_grading_system_label():
+    if variable10.get() == 0:
+        label17['text'] = '(0-5)'
+    elif variable10.get() == 1:
+        label17['text'] = '(0-10)'
+    elif variable10.get() == 2:
+        label17['text'] = '(0-100)'            
+
 def check_page_2():            
     s_6 = message_entry6.get()
     if s_6.isdigit():
         mb.showerror(
-            "Ошибка", 
-            "Введите корректные данные в поле \"ФИО студента\"")
+            "Ошибка", "Введите корректные данные в поле \"ФИО студента\"")
     else:
         message_entry6.delete(0, END)
         print("Вы ввели " + s_6)
@@ -83,8 +109,7 @@ def check_page_1():
     s_3 = message_entry3.get()
     if s_3.isdigit() or len(s_3) < 1:
         mb.showerror(
-            "Ошибка", 
-            "Введите корректные данные в поле \"Название курса\"")
+            "Ошибка", "Введите корректные данные в поле \"Название курса\"")
     else:
         message_entry3.delete(0, END)
         print("Вы создали курс " + s_3)
@@ -96,6 +121,7 @@ def check_page_1():
             print("есть подгруппы а, б и в")
         elif variable14.get() == 3:
             print("есть подгруппы а, б, в и г")
+        variable14.set(0)
 
     
 def select():
@@ -144,6 +170,9 @@ variable8 = StringVar(root)
 variable8.set(TypeofLesson[0]) # default value
 variable9 = StringVar(root)
 variable9.set(Subgroups[0]) # default value
+#page4
+variable10 = IntVar()
+variable10.set(0)
 #page1
 variable14 = IntVar()
 variable14.set(0)
@@ -191,18 +220,27 @@ message_entry5.place(x=302, y=250, anchor="c")
 message_entry6 = Entry(page2, textvariable=message6)
 message_entry6.place(x=302, y=92, anchor="c")
 #page1
-grading_system1 = Radiobutton(page1, text="<нет>",
+subgroups_none = Radiobutton(page1, text="<нет>",
                   variable=variable14, value=0)
-grading_system2 = Radiobutton(page1, text="2",
+subgroups_ab = Radiobutton(page1, text="2",
                     variable=variable14, value=1)
-grading_system3 = Radiobutton(page1, text="3",
+subgroups_abc = Radiobutton(page1, text="3",
                    variable=variable14, value=2)
-grading_system4 = Radiobutton(page1, text="4",
+subgroups_abcd = Radiobutton(page1, text="4",
                    variable=variable14, value=3)
-grading_system1.place(x=240, y=80)
-grading_system2.place(x=240, y=100)
-grading_system3.place(x=240, y=120)
-grading_system4.place(x=240, y=140)
+subgroups_none.place(x=240, y=80)
+subgroups_ab.place(x=240, y=100)
+subgroups_abc.place(x=240, y=120)
+subgroups_abcd.place(x=240, y=140)
+#page4
+grading_to_5 = Radiobutton(page4, command=change_grading_system_label, text="(0-5)", variable=variable10, value=0)
+grading_to_10 = Radiobutton(page4, command=change_grading_system_label, text="(0-10)", variable=variable10, value=1)
+grading_to_100 = Radiobutton(page4, command=change_grading_system_label, text="(0-100)", variable=variable10, value=2)
+
+grading_to_5.place(x=240, y=160)
+grading_to_10.place(x=300, y=160)
+grading_to_100.place(x=360, y=160)
+
 """
 метки с текстом и не только
 """
